@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A command-line tool for managing all your servers all in one place",
   "main": "build/index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,7 @@
   "author": "Giuliano Gostinfini (Ghostylab)",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "inquirer": "^9.2.11"
   },
   "devDependencies": {
