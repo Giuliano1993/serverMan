@@ -68,5 +68,24 @@ const getDistributions = async (filter="")=>{
         return distros.filter((distro)=>distro['title'].includes(filter))
     })
 }
+const getSshKeys= async ()=>{
+    const headers = buildBasicHeaders();
+    const url = API_BASE_URL + "account/keys";
+    return await fetch(url,{
+        headers:headers
+    }).then(res=>res.json())
+    .then(res=>res['ssh_keys'])
+}
 
-export { createDroplet, getDroplet, getDroplets }
+const getSizes = async ()=>{
+    const headers = buildBasicHeaders();
+    const url = API_BASE_URL + "sizes";
+    return await fetch(url,{
+        headers:headers
+    }).then(res=>res.json())
+    .then(res=>res['sizes'])
+    
+}
+
+
+export { createDroplet, getDroplet, getDroplets, getDistributions }
