@@ -1,4 +1,5 @@
 import { configDotenv } from "dotenv"
+
 configDotenv()
 const API_BASE_URL = "https://api.digitalocean.com/v2/"
 
@@ -11,10 +12,11 @@ const buildBasicHeaders = ()=>{
     }   
 }
 
-const createDroplet = (name, size, image)=>{
+const createDroplet = async (name, size, image)=>{
+    configDotenv();
     const headers = buildBasicHeaders();
     const createDropletUrl = API_BASE_URL + "droplets";
-    const sshKeys = [process.env.sshKeys]
+    const sshKeys = [process.env.sshKey]
 
     const data = {
         "name":name,
@@ -22,15 +24,15 @@ const createDroplet = (name, size, image)=>{
         "image":parseInt(image),
         "ssh_keys": sshKeys
     }
-
-    fetch(createDropletUrl,{
+    return await fetch(createDropletUrl,{
         method: "POST",
         headers: headers,
         body: JSON.stringify(data)
     })
     .then(res=>res.json())
-    .then((res)=>{
-        console.log(res)
+    .then((res)=>res.droplet)
+    .catch((err)=>{
+        console.log(err)
     })
 }
 
@@ -45,14 +47,17 @@ const getDroplet = async (dropletId)=>{
     .then(res=>res['droplet'])
 }
 
-const getDroplets = async ()=>{
+const getDroplets = ()=>{
     const headers = buildBasicHeaders();
     const url = API_BASE_URL + `droplets?page=1`;
-    return await fetch(url,{
+    return fetch(url,{
         headers: headers
     })
     .then(res=>res.json())
-    .then(res=>res['droplets'])
+    .then((res)=>res['droplets'])
+    .catch((err=>{
+        console.log(err)
+    }))
 }
 
 const getDistributions = async (filter="")=>{
@@ -88,4 +93,4 @@ const getSizes = async ()=>{
 }
 
 
-export { createDroplet, getDroplet, getDroplets, getDistributions }
+export { createDroplet, getDroplet, getDroplets, getDistributions, getSshKeys,getSizes }

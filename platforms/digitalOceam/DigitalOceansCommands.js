@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { createDroplet } from "./utilities.js";
+import setupServer from "./setupServer.js";
 
 const DigitalOceansCommands = function(){
     inquirer.prompt([{
@@ -17,7 +17,7 @@ const DigitalOceansCommands = function(){
         console.log(answers.command)
         switch (answers.command) {
             case "Create Server":
-                createDroplet()
+                setupServer()
                 break;
         
             default:
