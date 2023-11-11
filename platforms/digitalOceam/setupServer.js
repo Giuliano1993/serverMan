@@ -1,6 +1,7 @@
 import { type } from "os";
 import { getSizes, getDistributions, createDroplet, getDroplet } from "./utilities.js";
 import inquirer from "inquirer";
+import { NodeSSH } from "node-ssh";
 
 const setupServer = async ()=>{
     
@@ -38,10 +39,10 @@ const setupServer = async ()=>{
         const dropletImage = images[imageIndex]['id'];
     
         createDroplet(machineName,dropletSize,dropletImage).then(async (res)=>{
-            console.log(res)
             const {id} = res
             let droplet = await getDroplet(id);
             const dropletInterval = setInterval(async ()=>{
+                console.log(".")
                 droplet = await getDroplet(id)
                 if(droplet['status'] === 'active'){
                     clearInterval(dropletInterval);
@@ -57,7 +58,22 @@ const setupServer = async ()=>{
 
 const sshInstall = (droplet)=>{
     console.log("Droplet ready")
-    console.log(droplet)
+    const {ip_address} = droplet['networks']['v4'].find(ip=>ip.type === "public");
+    const ssh = new NodeSSH();
+    ssh.connect({
+        host: ip_address,
+        username: 'root',
+        privateKeyPath: process.env.localKeyFile
+
+    }).then(()=>{
+        ssh.execCommand('whoami').then(function(result) {
+            console.log('STDOUT: ' + result.stdout)
+            console.log('STDERR: ' + result.stderr)
+        })
+        
+    }).catch((error)=>{
+        console.log(error)
+    })
 }
 
 export default setupServer

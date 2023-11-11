@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import setupServer from "./setupServer.js";
+import connectToServer from "./connectToServer.js";
 
 const DigitalOceansCommands = function(){
     inquirer.prompt([{
@@ -18,6 +19,9 @@ const DigitalOceansCommands = function(){
         switch (answers.command) {
             case "Create Server":
                 setupServer()
+                break;
+            case "Connect to server with SSH":
+                connectToServer()
                 break;
         
             default:
