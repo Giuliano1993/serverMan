@@ -25,7 +25,7 @@ export default installServerCommand
 
 
 
-function installServer(ipAddress){
+async function installServer(ipAddress){
 
     const ssh = new NodeSSH();
     ssh.connect({
@@ -52,6 +52,24 @@ function installServer(ipAddress){
                 console.log(res.stdout)
                 return ssh.execCommand("systemctl restart apache2")
             })
+            .then((res)=>{
+                console.log(res.stdout)
+                return ssh.execCommand("php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"")
+            })
+            .then((res)=>{
+                console.log(res.stdout)
+                return ssh.execCommand("php composer-setup.php --install-dir=/usr/local/bin --filename=composer")
+            })
+            .then((res)=>{
+                console.log(res.stdout)
+                return ssh.execCommand("php -r \"unlink('composer-setup.php');\"")
+            })
+            .then((res)=>{
+                console.log(res.stdout)
+                return ssh.execCommand("apt-get install -y git")
+            }).finally(()=>{
+                console.log('installato tutto')
+            })
 
         const commands = [
             "apt-get update",
@@ -64,8 +82,11 @@ function installServer(ipAddress){
             "apt-get install -y git",
         ]
         
+        //return execCommands(commands)
         
-    }).catch((error)=>{
+        
+    })
+    .catch((error)=>{
         console.log(error)
         return ssh.connect({
             host: ip_address,
