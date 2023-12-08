@@ -1,6 +1,9 @@
 import inquirer from "inquirer";
 import setupServer from "./setupServer.js";
 import connectToServer from "./connectToServer.js";
+import installServerCommand from "./installServer.js";
+
+
 
 const DigitalOceansCommands = function(){
     inquirer.prompt([{
@@ -10,6 +13,7 @@ const DigitalOceansCommands = function(){
         choices:[
             'Create Server',
             'Connect to server with SSH',
+            'Install an initialized server',
             'Setup Website on a server',
             "Back",
             'Exit'
@@ -23,7 +27,9 @@ const DigitalOceansCommands = function(){
             case "Connect to server with SSH":
                 connectToServer()
                 break;
-        
+            case "Install an initialized server":
+                installServerCommand()
+                break;
             default:
                 break;
         }

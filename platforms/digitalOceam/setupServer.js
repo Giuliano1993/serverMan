@@ -46,6 +46,7 @@ const setupServer = async ()=>{
                 droplet = await getDroplet(id)
                 if(droplet['status'] === 'active'){
                     clearInterval(dropletInterval);
+                    
                     sshInstall(droplet)
                 }
             },1000)
@@ -63,16 +64,41 @@ const sshInstall = (droplet)=>{
     ssh.connect({
         host: ip_address,
         username: 'root',
-        privateKeyPath: process.env.localKeyFile
+        privateKeyPath: process.env.localKeyFile,
+        tryKeyboard:true
 
     }).then(()=>{
         ssh.execCommand('whoami').then(function(result) {
             console.log('STDOUT: ' + result.stdout)
             console.log('STDERR: ' + result.stderr)
         })
+
+        const commands = [
+            "apt-get update",
+            "apt-get install -y apache2",
+            "apt-get install -y php libapache2-mod-php",
+            "systemctl restart apache2",
+            "php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\"",
+            "php composer-setup.php --install-dir=/usr/local/bin --filename=composer",
+            "php -r \"unlink('composer-setup.php');\"",
+            "apt-get install -y git",
+        ]
+        ssh.execCommand
         
     }).catch((error)=>{
         console.log(error)
+        return ssh.connect({
+            host: ip_address,
+            username: 'root',
+            privateKeyPath: process.env.localKeyFile,
+            tryKeyboard:true
+    
+        })
+    }).then(()=>{
+        ssh.execCommand('ls').then(function(result) {
+            console.log('STDOUT: ' + result.stdout)
+            console.log('STDERR: ' + result.stderr)
+        })
     })
 }
 
