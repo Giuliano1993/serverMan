@@ -1,6 +1,7 @@
 import { NodeSSH } from "node-ssh";import { stdout } from "process";
 import { getDroplets } from "./utilities.js";
 import inquirer from "inquirer";
+import { spawn } from "child_process";
 const installServerCommand = async ()=>{
    
     const droplets = await getDroplets();
@@ -69,9 +70,10 @@ async function installServer(ipAddress){
                 return ssh.execCommand("apt-get install -y git")
             }).finally(()=>{
                 console.log('installato tutto')
+                spawn('node ./index.js')
             })
 
-        const commands = [
+        /*const commands = [
             "apt-get update",
             "apt-get install -y apache2",
             "apt-get install -y php libapache2-mod-php",
@@ -82,7 +84,17 @@ async function installServer(ipAddress){
             "apt-get install -y git",
         ]
         
-        //return execCommands(commands)
+        return execCommands(commands)
+        const commandPromises = commands.map((command)=>{
+            return ssh.execCommand(command).then((res)=>{
+                console.log(res.stdout)
+            })
+        });*/
+
+        /*resolvePromisesSeq(commandPromises).finally(()=>{
+            console.log('finidhed')
+        })*/
+
         
         
     })
@@ -102,3 +114,13 @@ async function installServer(ipAddress){
         })
     })
 }
+
+const resolvePromisesSeq = async (tasks) => {
+    const results = [];
+    for (const task of tasks) {
+      results.push(await task);
+    }
+  
+    return results;
+  };
+  
