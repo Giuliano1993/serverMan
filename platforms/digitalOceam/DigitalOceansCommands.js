@@ -14,7 +14,6 @@ const DigitalOceansCommands = function(){
             'Create Server',
             'Connect to server with SSH',
             'Install an initialized server',
-            'Setup Website on a server',
             "Init website on server",
             "Back",
             'Exit'

@@ -84,7 +84,7 @@ function createSite(ip_address){
                     }
                 })
         }
-
+        const confName = siteName.substring(0,siteName.indexOf('.')) + ".conf";
         const ssh = new NodeSSH();
         ssh.connect({
             host: ip_address,
@@ -101,10 +101,13 @@ function createSite(ip_address){
             }else{
                 return ssh.execCommand(`cd /var/www/${folderName}; touch ./index.html; echo -e "<h1>Hello World ${folderName}<h1>" >> ./index.html`)
             }
-        }).then((res)=>{
-            const confName = siteName.substring(0,siteName.indexOf('.')) + ".conf";
-            return ssh.putFile('./configs/apache/defaultDomain.conf',`/etc/apache2/sites-available/${confName}`)
-        }).then((res)=>{
+        }).then((res)=> ssh.putFile('./configs/apache/defaultDomain.conf',`/etc/apache2/sites-available/${confName}`))
+        .then((res)=>  ssh.execCommand(`sed -i 's/SITEFOLDERNAME/${folderName}/g' /etc/apache2/sites-available/${confName}`) )
+        .then((res)=>  ssh.execCommand(`a2ensite ${confName}`) )
+        .then((res)=>  ssh.execCommand(`a2dissite 000-default.conf`) )
+        .then((res)=>  ssh.execCommand(`apache2ctl configtest`) )
+        .then((res)=>  ssh.execCommand(`systemctl restart apache2`) )
+        .then((res)=>{
             console.log('finito')
         }).catch((err)=>{
             console.error(err)
