@@ -2,6 +2,7 @@ import { NodeSSH } from "node-ssh";import { stdout } from "process";
 import { getDroplets } from "./utilities.js";
 import inquirer from "inquirer";
 import { spawn } from "child_process";
+import { createSite } from "./createSite.js";
 const installServerCommand = async ()=>{
    
     const droplets = await getDroplets();
@@ -68,9 +69,21 @@ async function installServer(ipAddress){
             .then((res)=>{
                 console.log(res.stdout)
                 return ssh.execCommand("apt-get install -y git")
+            }).then((res)=>{
+                return inquirer.prompt([
+                    {
+                        type:"confirm",
+                        name:"website",
+                        message:"Do you want to create a website on this server?",
+                        default:true
+                    }
+                ])
+            }).then((answers)=>{
+                if(answers.website){
+                    createSite(ipAddress)
+                }
             }).finally(()=>{
-                console.log('installato tutto')
-                spawn('node ./index.js')
+                console.log('Done installing')
             })
 
         /*const commands = [

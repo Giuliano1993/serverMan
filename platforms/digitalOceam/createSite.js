@@ -22,7 +22,7 @@ const createSiteCommand = async ()=>{
 }
 export default createSiteCommand;
 
-function createSite(ip_address){
+export function createSite(ip_address){
     inquirer.prompt([
         {
             type:"text",

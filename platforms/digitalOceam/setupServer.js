@@ -83,7 +83,7 @@ const sshInstall = (droplet)=>{
             "php -r \"unlink('composer-setup.php');\"",
             "apt-get install -y git",
         ]
-        ssh.execCommand
+        //ssh.execCommand
         
     }).catch((error)=>{
         console.log(error)
