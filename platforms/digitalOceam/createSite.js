@@ -45,10 +45,14 @@ function createSite(ip_address){
         const siteName = answers.siteName.replace(' ','-')
         const folderName = answers.folderName !== '' ? answers.folderName.replace(' ','-') : answers.siteName.replace(' ','-')
         const gitRepo = answers.gitRepo
-
+        let gitCredentials = {
+            user: '',
+            token: '',
+            repo: ''
+        }
         if(gitRepo){
-            const user = getConfig('gitUser');
-            const token = getConfig('gitToken');
+            gitCredentials.user = getConfig('gitUser');
+            gitCredentials.token = getConfig('gitToken');
             const questions = [
                 {
                     type:'text',
@@ -56,14 +60,14 @@ function createSite(ip_address){
                     message: 'type your repository name'
                 }
             ];
-            if(user === '' || typeof user === 'undefined'){
+            if(gitCredentials.user === '' || typeof gitCredentials.user === 'undefined' || gitCredentials.user == null){
                 questions.push({
                     type: 'text',
                     name: 'gitUser',
                     text: "Type your github username"
                 })
             }
-            if(token === '' || typeof token === 'undefined'){
+            if(gitCredentials.token === '' || typeof gitCredentials.token === 'undefined' || gitCredentials.token == null){
                 questions.push({
                     type: 'text',
                     name: 'gitToken',
@@ -71,16 +75,16 @@ function createSite(ip_address){
                 })
             }
 
-            const gitCredentials = await inquirer.prompt(questions)
+            gitCredentials = await inquirer.prompt(questions)
                 .then((answers)=>{
-                    const {repoName} = answers;
-                    const user = user || answers.gitUser;
-                    const token = token || answers.gitToken;
+                    const repoName = answers.repoName;
+                    const user = gitCredentials.user || answers.gitUser;
+                    const token = gitCredentials.token || answers.gitToken;
 
                     return {
-                        repoName : repoName,
-                        gitUser : user,
-                        gitToken : token
+                        repo : repoName,
+                        user : user,
+                        token : token
                     }
                 })
         }
@@ -96,8 +100,8 @@ function createSite(ip_address){
         }).then((res)=>{
             console.log(res.stdout);
             if(gitRepo){
-                const { repoName, gitUser, gitToken } = gitCredentials;
-                return ssh.execCommand(`cd /var/www/${folderName}; git clone https://${gitUser}:${gitToken}@github.com/${gitUser}/${repoName}.git .`)
+                const { repo, user, token } = gitCredentials;
+                return ssh.execCommand(`cd /var/www/${folderName}; git clone https://${user}:${token}@github.com/${user}/${repo}.git .`)
             }else{
                 return ssh.execCommand(`cd /var/www/${folderName}; touch ./index.html; echo -e "<h1>Hello World ${folderName}<h1>" >> ./index.html`)
             }
