@@ -4,6 +4,10 @@ configDotenv()
 const API_BASE_URL = "https://api.digitalocean.com/v2/"
 
 
+export const getConfig = (configName)=>{
+    return process.env[configName];
+}
+
 const buildBasicHeaders = ()=>{
     const token = process.env.doAuthToken;
     return {

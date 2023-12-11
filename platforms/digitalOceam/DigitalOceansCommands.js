@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import setupServer from "./setupServer.js";
 import connectToServer from "./connectToServer.js";
 import installServerCommand from "./installServer.js";
-
+import createSiteCommand from "./createSite.js";
 
 
 const DigitalOceansCommands = function(){
@@ -15,6 +15,7 @@ const DigitalOceansCommands = function(){
             'Connect to server with SSH',
             'Install an initialized server',
             'Setup Website on a server',
+            "Init website on server",
             "Back",
             'Exit'
         ]
@@ -30,6 +31,9 @@ const DigitalOceansCommands = function(){
             case "Install an initialized server":
                 installServerCommand()
                 break;
+            case "Init website on server":
+                createSiteCommand()
+                break
             default:
                 break;
         }
