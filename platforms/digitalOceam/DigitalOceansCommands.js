@@ -14,7 +14,7 @@ const DigitalOceansCommands = function(){
             'Create Server',
             'Connect to server with SSH',
             'Install an initialized server',
-            "Init website on server",
+            "Add website to server",
             "Back",
             'Exit'
         ]
@@ -30,7 +30,7 @@ const DigitalOceansCommands = function(){
             case "Install an initialized server":
                 installServerCommand()
                 break;
-            case "Init website on server":
+            case "Add website to server":
                 createSiteCommand()
                 break
             default:
