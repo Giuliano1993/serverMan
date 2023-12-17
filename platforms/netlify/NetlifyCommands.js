@@ -13,6 +13,14 @@ const NetlifyCommands = function(){
         ]
     }]).then(answers=>{
         console.log(answers.command)
+        switch (answers.command) {
+            case "Create Site":
+                
+                break;
+        
+            default:
+                break;
+        }
     })
 }
 
