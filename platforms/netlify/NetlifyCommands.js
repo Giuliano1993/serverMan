@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import {createSite} from "./createSite.js";
 
 const NetlifyCommands = function(){
     inquirer.prompt([{
@@ -15,7 +16,7 @@ const NetlifyCommands = function(){
         console.log(answers.command)
         switch (answers.command) {
             case "Create Site":
-                
+                createSite();
                 break;
         
             default:

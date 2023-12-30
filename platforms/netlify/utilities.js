@@ -2,7 +2,7 @@ import { configDotenv } from "dotenv"
 configDotenv()
 
 
-export const netlifyRequest = async (url, body, contentType = "application/json",method = "POST")=>{
+export const netlifyRequest = async (url, body={}, contentType = "application/json",method = "POST")=>{
     const {netlifyToken, netlifyUser} = process.env;
     const netlifyAPI = "https://api.netlify.com";
 
@@ -12,6 +12,8 @@ export const netlifyRequest = async (url, body, contentType = "application/json"
             "Authorization": `Bearer ${netlifyToken}`,
             "Content-Type": contentType
         },
-        body
+        body: JSON.stringify(body)
     }).then(res=>res.json());   
 }
+
+export const getNetlifyDeployKey = async ()=> await netlifyRequest("/api/v1/deploy_keys").then(res=>res['public_key']);
