@@ -24,13 +24,15 @@ export const repoList = async ()=>{
 export const chooseRepo = async ()=>{
     
     const repos = await repoList();
-    const repoChoices = repos.map(repo=>repo['name']);
+    const repoChoices = repos.map(repo=>repo['full_name']);
     return await inquirer.prompt([{
         type: "list",
         name: "repo",
         message: "Choose a repo",
         choices: repoChoices
-    }]).then(answers=>answers.repo);
+    }]).then(answers=>{
+        return repos.find(repo=>repo['full_name'] === answers.repo)
+    });
 }
 
 export const getDeployKey = async (repo)=>{
