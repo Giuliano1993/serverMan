@@ -1,12 +1,11 @@
 # ServerManPy
 
+**Serverman** is a comprehensive tool for managing your servers across different platforms directly from your terminal.
+Being a porting of the previous python version there are still some work in progress and any contribution is welcome.
 
-This is a tool born to easily manage servers on digital ocean platform but is on the road to become a command line tool to manage your server and website across multiple platforms.
-While this is going to be open source, I'm also building a graphic interface version of this that I'll release asap.
+At the moment the tool handle DigitalOcean Server Creation and Sites addition, and deploying Github repos on netlify. 
 
-As for its story at the moment this contains mostly Digital Ocean functionalities, but you are welcome to add your part to make this a complete Server Manager
-
-Actually working on completing some Digital Ocean functionalities and adding connection for Netlify and Vercel
+While improving functionalities on the previous two platform, Vercel is next to come on the repo. 
 
 
 ### Getting started locally
