@@ -25,11 +25,9 @@ export const createSite = async function () {
     }]).then(answers=>answers.useRepo);
 
     if(useRepo){
-        const repo = await chooseRepo();
-        console.log(repo);
+        const repo = await chooseRepo();   
         const pk = await getNetlifyDeployKey();
         let gitDeployKey = await getDeployKey(repo['name']);
-        console.log(gitDeployKey);
         if(!gitDeployKey || getDeployKey.length === 0){
             console.log("No deploy key found for this repo. Creating one now.");
             gitDeployKey = await createDeployKey(repo['name'])
@@ -54,7 +52,7 @@ export const createSite = async function () {
     console.log(payload)
     netlifyRequest(`/api/v1/${netlifyUser}/sites`,payload).then((res)=>{
         console.log("Site created")
-        console.log(res);
+        
     }).catch((err)=>{
         console.log("Error creating site");
         console.log(err);
