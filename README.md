@@ -1,4 +1,4 @@
-# ServerManPy
+# ServerMan
 
 **Serverman** is a comprehensive tool for managing your servers across different platforms directly from your terminal.
 Being a porting of the previous python version there are still some work in progress and any contribution is welcome.
