@@ -1,8 +1,8 @@
 import { NodeSSH } from "node-ssh";import { stdout } from "process";
 import { getDroplets } from "./utilities.js";
 import inquirer from "inquirer";
-import { spawn } from "child_process";
 import { getConfig } from "./utilities.js";
+import { chooseRepo } from "../../gitUtilities.js";
 const createSiteCommand = async ()=>{
    
     const droplets = await getDroplets();
@@ -53,40 +53,24 @@ export function createSite(ip_address){
         if(gitRepo){
             gitCredentials.user = getConfig('gitUser');
             gitCredentials.token = getConfig('gitToken');
-            const questions = [
-                {
-                    type:'text',
-                    name: 'repoName',
-                    message: 'type your repository name'
-                }
-            ];
-            if(gitCredentials.user === '' || typeof gitCredentials.user === 'undefined' || gitCredentials.user == null){
-                questions.push({
-                    type: 'text',
-                    name: 'gitUser',
-                    text: "Type your github username"
-                })
-            }
-            if(gitCredentials.token === '' || typeof gitCredentials.token === 'undefined' || gitCredentials.token == null){
-                questions.push({
-                    type: 'text',
-                    name: 'gitToken',
-                    text: "Type your github token [ It won't be saved ]"
-                })
-            }
+            
+            const repo = await chooseRepo();
+            const user = gitCredentials.user || await inquirer.prompt({
+                type: 'text',
+                name: 'gitUser',
+                text: "Type your github username"
+            }).then((answers)=>answers.gitUser)
+            const token = gitCredentials.token || await inquirer.prompt({
+                type: 'text',
+                name: 'gitToken',
+                text: "Type your github token [ It won't be saved ]"
+            }).then((answers)=>answers.gitToken)
 
-            gitCredentials = await inquirer.prompt(questions)
-                .then((answers)=>{
-                    const repoName = answers.repoName;
-                    const user = gitCredentials.user || answers.gitUser;
-                    const token = gitCredentials.token || answers.gitToken;
-
-                    return {
-                        repo : repoName,
-                        user : user,
-                        token : token
-                    }
-                })
+            gitCredentials = {
+                user:user,
+                token:token,
+                repo:repo
+            }
         }
         const confName = siteName.substring(0,siteName.indexOf('.')) + ".conf";
         const ssh = new NodeSSH();
@@ -101,7 +85,7 @@ export function createSite(ip_address){
             console.log(res.stdout);
             if(gitRepo){
                 const { repo, user, token } = gitCredentials;
-                return ssh.execCommand(`cd /var/www/${folderName}; git clone https://${user}:${token}@github.com/${user}/${repo}.git .`)
+                return ssh.execCommand(`cd /var/www/${folderName}; git clone https://${user}:${token}@github.com/${user}/${repo['name']}.git .`)
             }else{
                 return ssh.execCommand(`cd /var/www/${folderName}; touch ./index.html; echo -e "<h1>Hello World ${folderName}<h1>" >> ./index.html`)
             }
@@ -112,7 +96,8 @@ export function createSite(ip_address){
         .then((res)=>  ssh.execCommand(`apache2ctl configtest`) )
         .then((res)=>  ssh.execCommand(`systemctl restart apache2`) )
         .then((res)=>{
-            console.log('finito')
+            console.log('Done!');
+            process.exit();
         }).catch((err)=>{
             console.error(err)
         })
