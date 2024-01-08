@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "server",
@@ -18,11 +18,14 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "inquirer": "^9.2.11",
+    "jest-extended": "^4.0.2",
     "node-ssh": "^13.1.0"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.4",
     "@types/node": "^20.8.3",
+    "cli-testing-library": "^2.0.2",
+    "jest": "^29.7.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
