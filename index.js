@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import inquirer from "inquirer";
 import  DigitalOceansCommands  from "./platforms/digitalOceam/DigitalOceansCommands.js";
 import  NetlifyCommands  from "./platforms/netlify/NetlifyCommands.js";
