@@ -3,6 +3,8 @@ import setupServer from "./setupServer.js";
 import connectToServer from "./connectToServer.js";
 import installServerCommand from "./installServer.js";
 import createSiteCommand from "./createSite.js";
+import { execSync } from "child_process";
+import init from "../../index.js";
 
 
 const DigitalOceansCommands = function(){
@@ -33,6 +35,12 @@ const DigitalOceansCommands = function(){
             case "Add website to server":
                 createSiteCommand()
                 break
+            case "Back":
+                init();
+                break;
+            case "Exit":
+                process.exit(0)
+                break;
             default:
                 break;
         }
