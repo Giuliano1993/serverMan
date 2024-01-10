@@ -1,4 +1,5 @@
 import inquirer from "inquirer";
+import init from "../../index.js";
 
 const VercelCommands = function(){
     inquirer.prompt([{
@@ -10,7 +11,16 @@ const VercelCommands = function(){
             "Exit"
         ]
     }]).then(answers=>{
-        console.log(answers.command)
+        switch (answers.command) {
+            case "Back":
+                init();
+                break;
+            case "Exit":
+                process.exit(0)
+                break;
+            default:
+                break;
+        }
     })
 }
 
