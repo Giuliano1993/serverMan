@@ -2,7 +2,7 @@ import { NodeSSH } from "node-ssh";import { stdout } from "process";
 import { getDroplets } from "./utilities.js";
 import inquirer from "inquirer";
 import { getConfig } from "./utilities.js";
-import { chooseRepo } from "../../gitUtilities.js";
+import { chooseRepo } from "../../utilities/gitUtilities.js";
 const createSiteCommand = async ()=>{
    
     const droplets = await getDroplets();

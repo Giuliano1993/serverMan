@@ -3,6 +3,7 @@ import inquirer from "inquirer";
 import  DigitalOceansCommands  from "./platforms/digitalOceam/DigitalOceansCommands.js";
 import  NetlifyCommands  from "./platforms/netlify/NetlifyCommands.js";
 import  VercelCommands  from "./platforms/vercel/VercelCommands.js";
+import {setConfiguration} from "./utilities/makeConfigs.js";
 export default function init(){
   inquirer
     .prompt([
@@ -10,7 +11,7 @@ export default function init(){
         type:"list",
         name:"platform",
         message: "Choose a platform",
-        choices: ["DigitalOcean", "Netlify","Vercel"]
+        choices: ["DigitalOcean", "Netlify","Vercel","Configutations", "Exit"]
       }
     ])
     .then(answers => {
@@ -26,7 +27,12 @@ export default function init(){
         case "Vercel":
           VercelCommands()
           break;
-      
+        case "Configutations":
+          setConfiguration();
+          break;
+        case "Exit":
+          process.exit(0);
+          break;
         default:
           break;
       }

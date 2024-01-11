@@ -1,5 +1,5 @@
 import inquirer  from "inquirer";
-import { chooseRepo, repoList, getDeployKey } from "../../gitUtilities.js";
+import { chooseRepo, repoList, getDeployKey } from "../../utilities/gitUtilities.js";
 import { configDotenv } from "dotenv";
 import { time } from "console";
 import { getNetlifyDeployKey, netlifyRequest } from "./utilities.js";
@@ -8,7 +8,7 @@ import { getNetlifyDeployKey, netlifyRequest } from "./utilities.js";
 configDotenv();
 
 export const createSite = async function () {    
-    const {githubTestInstallationId, netlifyUser} = process.env;
+    const {githubInstallationId, netlifyUser} = process.env;
     
     const sitename = Date.now() + "site";
 
@@ -44,7 +44,7 @@ export const createSite = async function () {
             "provider": "github",
             "repo": repo['full_name'],
             "repo_id": repo['id'],
-            "installation_id": githubTestInstallationId
+            "installation_id": githubInstallationId
         }
         payload["build_settings"] = payload['repo']
             
