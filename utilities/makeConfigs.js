@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync, writeFile, writeFileSync } from "fs";
+import { readFileSync, writeFile, writeFileSync, existsSync } from "fs";
 import inquirer from "inquirer";
 import init from "../init.js";
 
@@ -122,6 +122,9 @@ export const setupConfiguration = async ()=>{
 
 
 const setEnvOption = (opt, value)=>{
+    if(!existsSync(".env")){
+        writeFileSync(".env","",(err)=>{if(err)console.error(err)})
+    }
     const data = readFileSync(".env", "utf8");
     const condfigExsist = data.includes(opt);
     if(condfigExsist){
