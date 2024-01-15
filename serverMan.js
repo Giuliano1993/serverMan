@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import init from "./init.js";
 import fs from "fs";
 import {setupConfiguration} from "./utilities/makeConfigs.js";
