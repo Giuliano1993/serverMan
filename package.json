@@ -1,6 +1,6 @@
 {
   "name": "@ghostylab/serverman",
-  "version": "0.0.3",
+  "version": "0.0.4beta",
   "description": "A command-line tool for managing all your servers all in one place",
   "repo": "https://github.com/Giuliano1993/serverManNode",
   "main": "./serverMan.js",
@@ -11,7 +11,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "postinstall": "node ./postinstall.js"
+    "postprepare": "node ./postinstall.js"
   },
   "keywords": [
     "server",
