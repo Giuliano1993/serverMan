@@ -164,7 +164,7 @@ const singleConfigurations = [
 ];
 
 export const setConfiguration = ()=>{
-    const opts = readFileSync(".env", "utf8").split("\n");
+    const opts = readFileSync(envFile, "utf8").split("\n");
     inquirer.prompt([{
         type:"list",
         name:"option",
