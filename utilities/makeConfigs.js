@@ -129,9 +129,7 @@ export const setupConfiguration = async ()=>{
 
 
 const setEnvOption = (opt, value)=>{
-    if(!existsSync(envFile)){
-        writeFileSync(envFile,"",(err)=>{if(err)console.error(err)})
-    }
+    exsistOrCreateEnvFile();
     const data = readFileSync(envFile, "utf8");
     const condfigExsist = data.includes(opt);
     if(condfigExsist){
@@ -164,6 +162,7 @@ const singleConfigurations = [
 ];
 
 export const setConfiguration = ()=>{
+    exsistOrCreateEnvFile();
     const opts = readFileSync(envFile, "utf8").split("\n");
     inquirer.prompt([{
         type:"list",
@@ -185,6 +184,17 @@ export const setConfiguration = ()=>{
         
     })
     
+}
+
+
+const exsistOrCreateEnvFile = ()=>{
+    if(!existsSync(envFile)){
+        writeFileSync(envFile,"",(err)=>{if(err)console.error(err)})
+    }
+}
+
+export const exsistEnvFile = ()=>{
+    return existsSync(envFile);
 }
 
 
