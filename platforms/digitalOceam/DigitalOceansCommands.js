@@ -4,7 +4,7 @@ import connectToServer from "./connectToServer.js";
 import installServerCommand from "./installServer.js";
 import createSiteCommand from "./createSite.js";
 import { execSync } from "child_process";
-import init from "../../index.js";
+import init from "../../init.js";
 
 
 const DigitalOceansCommands = function(){

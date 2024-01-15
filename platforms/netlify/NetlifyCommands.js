@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 import {createSite} from "./createSite.js";
-import init from "../../index.js";
+import init from "../../init.js";
 
 const NetlifyCommands = function(){
     inquirer.prompt([{

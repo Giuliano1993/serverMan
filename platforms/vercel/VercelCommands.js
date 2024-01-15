@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import init from "../../index.js";
+import init from "../../init.js";
 
 const VercelCommands = function(){
     inquirer.prompt([{

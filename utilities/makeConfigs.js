@@ -2,7 +2,7 @@
 
 import { readFileSync, writeFile, writeFileSync } from "fs";
 import inquirer from "inquirer";
-import init from "../index.js";
+import init from "../init.js";
 
 const doConfig = [
     {
@@ -76,7 +76,7 @@ const chooseConfig = [
         choices: ["Github","DigitalOcean", "Netlify", "Vercel", "Skip"]
     }
 ];
-const setupConfiguration = async ()=>{
+export const setupConfiguration = async ()=>{
     inquirer.prompt(chooseConfig).then(answers=>{
         switch(answers.platform){
             case "DigitalOcean":
@@ -179,5 +179,5 @@ export const setConfiguration = ()=>{
 
 
 
-export default setupConfiguration;
+
 

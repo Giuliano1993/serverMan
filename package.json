@@ -1,12 +1,12 @@
 {
   "name": "@ghostylab/serverman",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A command-line tool for managing all your servers all in one place",
   "repo": "https://github.com/Giuliano1993/serverManNode",
-  "main": "./index.js",
+  "main": "./serverMan.js",
   "bin": {
-    "serverman": "./index.js",
-    "sm": "./index.js"
+    "serverman": "./serverMan.js",
+    "sm": "./serverMan.js"
   },
   "type": "module",
   "scripts": {
