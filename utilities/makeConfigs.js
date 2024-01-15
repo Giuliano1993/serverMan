@@ -3,6 +3,13 @@
 import { readFileSync, writeFile, writeFileSync, existsSync } from "fs";
 import inquirer from "inquirer";
 import init from "../init.js";
+import * as path from "node:path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const envFile = path.join(__dirname,"..",".env");
+
+
 
 const doConfig = [
     {
@@ -122,10 +129,10 @@ export const setupConfiguration = async ()=>{
 
 
 const setEnvOption = (opt, value)=>{
-    if(!existsSync(".env")){
-        writeFileSync(".env","",(err)=>{if(err)console.error(err)})
+    if(!existsSync(envFile)){
+        writeFileSync(envFile,"",(err)=>{if(err)console.error(err)})
     }
-    const data = readFileSync(".env", "utf8");
+    const data = readFileSync(envFile, "utf8");
     const condfigExsist = data.includes(opt);
     if(condfigExsist){
         const lines = [];
@@ -135,9 +142,9 @@ const setEnvOption = (opt, value)=>{
             }
             lines.push(line);
         })
-        writeFileSync(".env",lines.join("\n"),(err)=>{if(err)console.error(err)})
+        writeFileSync(envFile,lines.join("\n"),(err)=>{if(err)console.error(err)})
     }else{
-        writeFileSync(".env",data + `\n${opt}=${value}`,(err)=>{if(err)console.error(err)})
+        writeFileSync(envFile,data + `\n${opt}=${value}`,(err)=>{if(err)console.error(err)})
     }
 
 }

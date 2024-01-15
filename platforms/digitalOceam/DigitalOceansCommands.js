@@ -21,7 +21,6 @@ const DigitalOceansCommands = function(){
             'Exit'
         ]
     }]).then(answers=>{
-        console.log(answers.command)
         switch (answers.command) {
             case "Create Server":
                 setupServer()
