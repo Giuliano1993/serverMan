@@ -1,6 +1,10 @@
 import { configDotenv } from "dotenv"
+import * as path from "node:path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-configDotenv()
+configDotenv({path: __dirname + '/../../.env'})
 const API_BASE_URL = "https://api.digitalocean.com/v2/"
 
 
@@ -9,6 +13,7 @@ export const getConfig = (configName)=>{
 }
 
 const buildBasicHeaders = ()=>{
+    console.log(process.env);
     const token = process.env.doAuthToken;
     return {
         'Content-Type':'application/json',
