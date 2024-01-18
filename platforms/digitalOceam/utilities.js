@@ -13,7 +13,6 @@ export const getConfig = (configName)=>{
 }
 
 const buildBasicHeaders = ()=>{
-    console.log(process.env);
     const token = process.env.doAuthToken;
     return {
         'Content-Type':'application/json',
