@@ -1,5 +1,6 @@
 import inquirer from "inquirer";
 import init from "../../init.js";
+import ProjectList from "./ProjectList.js";
 
 const VercelCommands = function(){
     inquirer.prompt([{
@@ -7,11 +8,15 @@ const VercelCommands = function(){
         name:"command",
         message: "What do you want to do?",
         choices: [
+            "Projects list",
             "Back",
             "Exit"
         ]
     }]).then(answers=>{
         switch (answers.command) {
+            case "Projects list":
+                ProjectList();
+                break;
             case "Back":
                 init();
                 break;
