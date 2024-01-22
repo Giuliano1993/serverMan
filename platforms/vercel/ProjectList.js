@@ -10,5 +10,6 @@ export default async function ProjectList() {
     }).then(response => response.json())
     .then(data => data.projects)        
 
-    console.log(sites.map(((s)=>s.link)))
+    console.log(sites.map(((s)=>s.name)))
+  
 }
