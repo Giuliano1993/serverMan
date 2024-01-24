@@ -9,7 +9,6 @@ export default async function ProjectList() {
       "method": "get"
     }).then(response => response.json())
     .then(data => {
-      console.log(data.projects);
       return data.projects
     })        
 

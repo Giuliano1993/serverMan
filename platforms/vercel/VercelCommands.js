@@ -9,16 +9,16 @@ const VercelCommands = function(){
         name:"command",
         message: "What do you want to do?",
         choices: [
-            "Projects list",
+            //"Projects list",
             "New Project",
             "Back",
             "Exit"
         ]
     }]).then(answers=>{
         switch (answers.command) {
-            case "Projects list":
+            /*case "Projects list":
                 ProjectList();
-                break;
+                break;*/
             case "New Project":
                 AddProject();
                 break;
