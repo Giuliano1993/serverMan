@@ -1,16 +1,19 @@
 import { timeStamp } from "console";
 import { configDotenv } from "dotenv";
+import { chooseRepo } from "../../utilities/gitUtilities.js";
 
 configDotenv();
 
 export default async function AddProject() {
     const {vercelToken} = process.env;
-    const projName = "my-project-ssss";
+    const projName = "my-project-ssas";
+    const repo = await chooseRepo();
+    console.log(repo);
     const body = {
         "name": projName,
         "gitRepository": {
             "type": "github",
-            "repo": "Giuliano1993/vue-the-menue"
+            "repo": repo.full_name, 
         },
         "buildCommand": "npm run build",
     };
@@ -26,7 +29,11 @@ export default async function AddProject() {
     const deploymentBody = {
         "name": "my-deployment",
         "project":  projName,
-        "files":[]
+        "gitSource":{
+            "ref": "main",
+            "type": "github",
+            "repoId": repo.id
+        }
     };
     const deployments = await fetch(`https://api.vercel.com/v13/deployments`, {
         "headers": {
