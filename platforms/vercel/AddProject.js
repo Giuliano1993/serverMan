@@ -1,14 +1,18 @@
 import { timeStamp } from "console";
 import { configDotenv } from "dotenv";
 import { chooseRepo } from "../../utilities/gitUtilities.js";
+import inquirer from "inquirer";
 
 configDotenv();
 
 export default async function AddProject() {
     const {vercelToken} = process.env;
-    const projName = "my-project-ssas";
+    const projName = await inquirer.prompt({
+        type: "input",
+        name: "projName",
+        message: "Choose your project name?"
+    }).then(answers => answers.projName);
     const repo = await chooseRepo();
-    console.log(repo);
     const body = {
         "name": projName,
         "gitRepository": {
@@ -24,8 +28,10 @@ export default async function AddProject() {
         "method": "POST",
         "body": JSON.stringify(body)
     }).then(response => response.json());
-
-    console.log(res);
+    if(res.error){
+        console.log(res.error.message);
+        return;
+    }
     const deploymentBody = {
         "name": "my-deployment",
         "project":  projName,
@@ -35,14 +41,24 @@ export default async function AddProject() {
             "repoId": repo.id
         }
     };
-    const deployments = await fetch(`https://api.vercel.com/v13/deployments`, {
+    await fetch(`https://api.vercel.com/v13/deployments`, {
         "headers": {
             "Authorization": `Bearer ${vercelToken}`
         },
         "method": "POST",
         "body": JSON.stringify(deploymentBody)
-    }).then(response => response.json());
+    }).then(response => response.json())
+    .then(data=>{
+        if(data.error){
+            console.log(data.error.message);
+            return;
+        }
+        console.log("Project created");
+        //console.log(data);
+        console.log(`Check your deployment status at ${data.inspectorUrl}`)
+    }).catch(err=>{
+        console.log(err);
+    });
     
-    console.log(deployments);
 
 }
