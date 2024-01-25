@@ -1,11 +1,10 @@
 # ServerMan
 
 **Serverman** is a comprehensive tool for managing your servers across different platforms directly from your terminal.
-Being a porting of the previous python version there are still some work in progress and any contribution is welcome.
+At the moment the tool can handle **DigitalOcean** Server Creation and Sites addition, and deploying Github repos on **Netlify** and **Vercel**. 
 
-At the moment the tool handle DigitalOcean Server Creation and Sites addition, and deploying Github repos on netlify. 
-
-While improving functionalities on the previous two platform, Vercel is next to come on the repo. 
+If you want to contribute to this project, please read the [Contributing file](./CONTRIBUTING.md) first. For any further doubt don't hesitate to contact me!
+Issues and features ideas are welcome!
 
 ## Installation
 
