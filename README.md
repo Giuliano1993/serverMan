@@ -6,6 +6,25 @@ At the moment the tool can handle **DigitalOcean** Server Creation and Sites add
 If you want to contribute to this project, please read the [Contributing file](./CONTRIBUTING.md) first. For any further doubt don't hesitate to contact me!
 Issues and features ideas are welcome!
 
+- [ServerMan](#serverman)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+    - [Digital Ocean](#digital-ocean)
+      - [doAuthToken](#doauthtoken)
+      - [localKeyFile](#localkeyfile)
+      - [sshKey](#sshkey)
+    - [GitHub](#github)
+      - [GitUser](#gituser)
+      - [GitToken](#gittoken)
+    - [Netlify](#netlify)
+      - [NetlifyUser](#netlifyuser)
+      - [NetlifyToken](#netlifytoken)
+      - [GithubInstallation](#githubinstallation)
+    - [Vercel](#vercel)
+      - [vercelToken](#verceltoken)
+
+
+
 ## Installation
 
 To install ServerMan locally just open a terminal and run:
