@@ -26,7 +26,7 @@ or
 serverman
 ```
 
-### Configuration
+## Configuration
 The first time you'll run serverman you'll be asked to provide some configurations.
 Don't worry if you don't have everything at your first run, you can always access and edit your configs later
 ### Digital Ocean
