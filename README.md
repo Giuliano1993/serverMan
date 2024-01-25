@@ -7,28 +7,66 @@ At the moment the tool handle DigitalOcean Server Creation and Sites addition, a
 
 While improving functionalities on the previous two platform, Vercel is next to come on the repo. 
 
+## Installation
 
-### Getting started locally
-In order to get this tool running, you will need some config:
+To install ServerMan locally just open a terminal and run:
 
-- first of all you will need a Digital Ocean Token. You can get it [here](https://cloud.digitalocean.com/account/api/tokens?i=75bc4f)
-- generate your key and copy it in your **.env** file using the key  ```doAuthToken```
+```bash
+npm i -g ghostylab/serverman@latest
+```
 
-- Now add the SSH key; You can either use an already exsisting key or creating a new one:
-  - To add a new ssh key from your computer to ssh you can go [here](https://cloud.digitalocean.com/account/security?i=75bc4f) after adding it copy the fingerprint and add it to sshKeys in your `.env` file. This will allow the script to access the ssh and configure your server
+then to use it you can run
 
-- Then add your git infos: in order to clone your git repositories you will need your username and token in your `.env` file or directly prompted during server setup. Either if you want to put it in your  env file or ask for it during setup. you will need a github token in order to cone it.
-You can get one by going [here](https://github.com/settings/tokens), or guided step by step: 
-1. open [Github](https://github.com/)
-2. click on your profile image on top right corner
-3. Select "**Settings**"
-4. Select "**Developer Settings**"
-5. Go to Personal Access tokens > tokens
-6. Generate new token
-7. Choose an expiration date and check all the repo checkbokes
-8. give it a name and copy your new token
+```bash
+sm
+```
+or
+
+```bash
+serverman
+```
+
+### Configuration
+The first time you'll run serverman you'll be asked to provide some configurations.
+Don't worry if you don't have everything at your first run, you can always access and edit your configs later
+### Digital Ocean
+
+#### doAuthToken
+- Your Digital Ocean Token. You can get it [here](https://cloud.digitalocean.com/account/api/tokens?i=75bc4f)
+
+#### localKeyFile
+- the path to your ssh key (necessary for ssh your way to the server)
 
 
+#### sshKey
+- your Ssh key fingerprint. You can either use an already exsisting key or creating a new one. To add a new ssh key from your computer to Digital Ocean's recognized keys you can go [here](https://cloud.digitalocean.com/account/security?i=75bc4f). You can then ad the fingerprint to your config.
+
+
+### GitHub
+
+#### GitUser
+Your github username
+
+#### GitToken
+Your Github Token. You can get one by going [here](https://github.com/settings/tokens)
+
+
+### Netlify 
+
+#### NetlifyUser
+Your netlify username
+
+#### NetlifyToken
+Your Netlify Token.
+You can get one by going [here](https://github.com/settings/tokens)
+
+
+#### GithubInstallation 
+Your Netlify Installation ID on github.
 If you wish to use ServerMan to create sites on netlify you will need to connect Netlify and github manually and save the installation ID.
 To create you connection between Netlify and github you just need to go on [netlify user settings](https://app.netlify.com/user/settings) and configure the connection with your github account (grant access to all the repos to easily deploy further projects).
-After doing this you can con on [Github Application settings](https://github.com/settings/installations) click on <key>configure</key>  and copy the number appended at the end of the url into your `.env` file
+After doing this you can con on [Github Application settings](https://github.com/settings/installations) click on <key>configure</key>  and copy the number appended at the end of the url. 
+### Vercel
+
+#### vercelToken
+Your Vercel Token
