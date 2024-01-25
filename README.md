@@ -1,4 +1,13 @@
-# ServerMan
+
+```
+  _____
+ / ____|
+| (___   ___ _ ____   _____ _ __ _ __ ___   __ _ _ __
+ \___ \ / _ \ '__\ \ / / _ \ '__| '_ ` _ \ / _` | '_ \
+ ____) |  __/ |   \ V /  __/ |  | | | | | | (_| | | | |
+|_____/ \___|_|    \_/ \___|_|  |_| |_| |_|\__,_|_| |_|
+
+```
 
 **Serverman** is a comprehensive tool for managing your servers across different platforms directly from your terminal.
 At the moment the tool can handle **DigitalOcean** Server Creation and Sites addition, and deploying Github repos on **Netlify** and **Vercel**. 
@@ -6,22 +15,21 @@ At the moment the tool can handle **DigitalOcean** Server Creation and Sites add
 If you want to contribute to this project, please read the [Contributing file](./CONTRIBUTING.md) first. For any further doubt don't hesitate to contact me!
 Issues and features ideas are welcome!
 
-- [ServerMan](#serverman)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-    - [Digital Ocean](#digital-ocean)
-      - [doAuthToken](#doauthtoken)
-      - [localKeyFile](#localkeyfile)
-      - [sshKey](#sshkey)
-    - [GitHub](#github)
-      - [GitUser](#gituser)
-      - [GitToken](#gittoken)
-    - [Netlify](#netlify)
-      - [NetlifyUser](#netlifyuser)
-      - [NetlifyToken](#netlifytoken)
-      - [GithubInstallation](#githubinstallation)
-    - [Vercel](#vercel)
-      - [vercelToken](#verceltoken)
+- [Installation](#installation)
+- [Configuration](#configuration)
+  - [Digital Ocean](#digital-ocean)
+    - [doAuthToken](#doauthtoken)
+    - [localKeyFile](#localkeyfile)
+    - [sshKey](#sshkey)
+  - [GitHub](#github)
+    - [GitUser](#gituser)
+    - [GitToken](#gittoken)
+  - [Netlify](#netlify)
+    - [NetlifyUser](#netlifyuser)
+    - [NetlifyToken](#netlifytoken)
+    - [GithubInstallation](#githubinstallation)
+  - [Vercel](#vercel)
+    - [vercelToken](#verceltoken)
 
 
 
