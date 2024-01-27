@@ -25,7 +25,8 @@
     "dotenv": "^16.3.1",
     "inquirer": "^9.2.11",
     "jest-extended": "^4.0.2",
-    "node-ssh": "^13.1.0"
+    "node-ssh": "^13.1.0",
+    "open": "^10.0.3"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.4",
