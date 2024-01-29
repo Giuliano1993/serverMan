@@ -14,7 +14,6 @@ export default async function ProjectList() {
     .then(data => {
       return data.projects
     })        
-    console.log(sites);
  
     const project = await inquirer.prompt([{
       type:"list",
@@ -49,9 +48,41 @@ export default async function ProjectList() {
         console.log(project)
         break;
       case "Delete":
-        console.log("Deleting")
+        deleteApp(project)
         break;
     }
 
 
+}
+
+const deleteApp = async (project) => {
+  
+  const {vercelToken} = process.env;
+  const deleteQuestions = [
+    {
+      type: "confirm",
+      name: "confirm",
+      message: `Are you sure you want to delete ${project.name}?`
+    },
+    {
+      type: "input",
+      name: "name",
+      message: `Please type the name of the project to confirm`,
+      when: (answers) => answers.confirm
+    }
+  ];
+
+  const confirmDelete = await inquirer.prompt(deleteQuestions).then((answers) => answers.confirm && answers.name === project.name);
+
+  if(confirmDelete) {
+
+    await fetch(`https://api.vercel.com/v9/projects/${project.id}`, {
+      "headers": {
+        "Authorization": `Bearer ${vercelToken}`
+      },
+      "method": "delete"
+    }).then((response) => { if(response.status === 204){
+      console.log("Project deleted")
+    }})
+  }
 }
