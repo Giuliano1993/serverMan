@@ -1,5 +1,5 @@
 import { configDotenv } from "dotenv"
-configDotenv()
+configDotenv({path: __dirname + '/../../.env'})
 
 
 export const netlifyRequest = async (url, body={}, contentType = "application/json",method = "POST")=>{

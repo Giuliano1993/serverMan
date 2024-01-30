@@ -21,7 +21,7 @@ const buildBasicHeaders = ()=>{
 }
 
 const createDroplet = async (name, size, image)=>{
-    configDotenv();
+    configDotenv({path: __dirname + '/../../.env'});
     const headers = buildBasicHeaders();
     const createDropletUrl = API_BASE_URL + "droplets";
     const sshKeys = [process.env.sshKey]

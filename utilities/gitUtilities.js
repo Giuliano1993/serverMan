@@ -3,7 +3,7 @@ import { configDotenv } from "dotenv"
 import * as fs from "fs";
 import inquirer from "inquirer";
 
-configDotenv()
+configDotenv({path: __dirname + '/../.env'})
 const API_BASE_URL = "https://api.github.com/";
 
 export const repoList = async ()=>{

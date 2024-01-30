@@ -3,7 +3,7 @@ import { configDotenv } from "dotenv";
 import { chooseRepo } from "../../utilities/gitUtilities.js";
 import inquirer from "inquirer";
 
-configDotenv();
+configDotenv({path: __dirname + '/../../.env'})
 
 export default async function AddProject() {
     const {vercelToken} = process.env;

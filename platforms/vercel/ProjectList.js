@@ -2,7 +2,7 @@ import { configDotenv } from "dotenv"
 import inquirer from "inquirer";
 import open from "open";
 
-configDotenv()
+configDotenv({path: __dirname + '/../../.env'})
 export default async function ProjectList() {
     const {vercelToken} = process.env;
     const sites = await fetch("https://api.vercel.com/v9/projects", {
@@ -44,9 +44,9 @@ export default async function ProjectList() {
         console.log(`Opening ${url}`)
         open("http://"+url);
         break;
-      case "Show informations":
+      /*case "Show informations":
         console.log(project)
-        break;
+        break;*/
       case "Delete":
         deleteApp(project)
         break;

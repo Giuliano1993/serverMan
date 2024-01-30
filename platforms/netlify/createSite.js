@@ -5,8 +5,8 @@ import { time } from "console";
 import { getNetlifyDeployKey, netlifyRequest } from "./utilities.js";
 
 
-configDotenv();
 
+configDotenv({path: __dirname + '/../../.env'})
 export const createSite = async function () {    
     const {githubInstallationId, netlifyUser} = process.env;
     

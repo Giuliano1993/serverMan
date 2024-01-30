@@ -1,6 +1,7 @@
 import inquirer from "inquirer";
 import {createSite} from "./createSite.js";
 import init from "../../init.js";
+import listSites from "./listSites.js";
 
 const NetlifyCommands = function(){
     inquirer.prompt([{
@@ -17,6 +18,9 @@ const NetlifyCommands = function(){
         switch (answers.command) {
             case "Create Site":
                 createSite();
+                break;
+            case "List Sites":
+                listSites();
                 break;
             case "Back":
                 init();
