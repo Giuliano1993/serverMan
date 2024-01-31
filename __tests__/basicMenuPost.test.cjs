@@ -1,6 +1,10 @@
 const {render} = require('cli-testing-library');
 const {resolve} = require('path')
 
+import * as path from "node:path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 test('Open the commands palette', async () => {

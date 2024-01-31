@@ -3,6 +3,10 @@ import { configDotenv } from "dotenv"
 import * as fs from "fs";
 import inquirer from "inquirer";
 
+import * as path from "node:path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 configDotenv({path: __dirname + '/../.env'})
 const API_BASE_URL = "https://api.github.com/";
 

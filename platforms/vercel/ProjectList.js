@@ -1,7 +1,11 @@
 import { configDotenv } from "dotenv"
 import inquirer from "inquirer";
+import * as path from "node:path";
 import open from "open";
 
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 configDotenv({path: __dirname + '/../../.env'})
 export default async function ProjectList() {
     const {vercelToken} = process.env;

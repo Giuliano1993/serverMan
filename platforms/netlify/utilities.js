@@ -1,4 +1,8 @@
 import { configDotenv } from "dotenv"
+import { fileURLToPath } from 'url';
+import * as path from "node:path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 configDotenv({path: __dirname + '/../../.env'})
 
 
