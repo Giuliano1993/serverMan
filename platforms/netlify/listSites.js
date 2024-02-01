@@ -37,9 +37,8 @@ const listSites = async ()=>{
 
     switch(action){
         case "Open in browser":
-            const url = site?.url;
-            console.log(`Opening ${url}`);
-            open("http://"+url);
+            const url = site?.ssl_url;
+            open(url);
             break;
         case "Delete":
             deleteSite(site);
@@ -68,12 +67,11 @@ const deleteSite = async (site) =>{
             const netlifyAPI = "https://api.netlify.com";
             const url = `/api/v1/sites/${site.id}`
              fetch(netlifyAPI + url,{
-                method,
+                method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${netlifyToken}`,
-                    "Content-Type": contentType
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(body)
             }).then((res)=>{
                 if(res.status === 204){
                     console.log("Site deleted");
