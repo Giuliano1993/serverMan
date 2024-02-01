@@ -10,14 +10,17 @@ export const netlifyRequest = async (url, body={}, contentType = "application/js
     const {netlifyToken, netlifyUser} = process.env;
     const netlifyAPI = "https://api.netlify.com";
 
-    return await fetch(netlifyAPI + url,{
+    const reqPars = {
         method,
         headers: {
             "Authorization": `Bearer ${netlifyToken}`,
             "Content-Type": contentType
-        },
-        body: JSON.stringify(body)
-    }).then(res=>res.json());   
+        }
+    }
+    if(method !== "GET"){
+        reqPars['body'] = JSON.stringify(body);
+    }
+    return await fetch(netlifyAPI + url, reqPars).then(res=>res.json());   
 }
 
 export const getNetlifyDeployKey = async ()=> await netlifyRequest("/api/v1/deploy_keys").then(res=>res['public_key']);
