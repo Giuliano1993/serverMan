@@ -2,16 +2,23 @@ import inquirer  from "inquirer";
 import { chooseRepo, repoList, getDeployKey } from "../../utilities/gitUtilities.js";
 import { configDotenv } from "dotenv";
 import { time } from "console";
-import { getNetlifyDeployKey, netlifyRequest } from "./utilities.js";
+import { getNetlifyDeployKey, netlifyRequest, verifyNetlifyConfig } from "./utilities.js";
 
 
 
 import * as path from "node:path";
 import { fileURLToPath } from 'url';
+import { setConfiguration } from "../../utilities/makeConfigs.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 configDotenv({path: __dirname + '/../../.env'})
-export const createSite = async function () {    
+export const createSite = async function () {  
+    if(!verifyNetlifyConfig()){
+        console.log("You need to set your Netlify Token and Netlify username first");
+        //await setConfiguration(["netlifyToken","netlifyUser"]);
+        process.exit(0);
+    }
+    
     const {githubInstallationId, netlifyUser} = process.env;
     
     const sitename = Date.now() + "site";

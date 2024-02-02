@@ -161,14 +161,16 @@ const singleConfigurations = [
     "exit"
 ];
 
-export const setConfiguration = ()=>{
+
+export const setConfiguration = (configs = null)=>{
+    const configChoices = configs || singleConfigurations;
     exsistOrCreateEnvFile();
     const opts = readFileSync(envFile, "utf8").split("\n");
     inquirer.prompt([{
         type:"list",
         name:"option",
         message:"Choose a configuration to change",
-        choices:singleConfigurations
+        choices:configChoices
     },{
         type:"input",
         name:"value",
@@ -179,7 +181,7 @@ export const setConfiguration = ()=>{
             init()
         }else{
             setEnvOption(answers.option,answers.value);
-            setConfiguration();
+            setConfiguration(configs);
         }
         
     })

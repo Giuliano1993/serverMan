@@ -15,8 +15,6 @@ export default function init(){
       }
     ])
     .then(answers => {
-      console.info('Answer:', answers.faveReptile);
-      console.log(answers.platform)
       switch (answers.platform) {
         case "DigitalOcean":
           DigitalOceansCommands()
