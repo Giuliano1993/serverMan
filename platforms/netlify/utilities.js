@@ -20,6 +20,8 @@ export const netlifyRequest = async (url, body={}, contentType = "application/js
     if(method !== "GET"){
         reqPars['body'] = JSON.stringify(body);
     }
+
+    // here need to be added control on the response status
     return await fetch(netlifyAPI + url, reqPars).then(res=>res.json());   
 }
 

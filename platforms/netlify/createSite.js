@@ -8,15 +8,15 @@ import { getNetlifyDeployKey, netlifyRequest, verifyNetlifyConfig } from "./util
 
 import * as path from "node:path";
 import { fileURLToPath } from 'url';
-import { setConfiguration  } from "../../utilities/makeConfigs.js";
+import { setConfiguration, setConfigurationAsync  } from "../../utilities/makeConfigs.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 configDotenv({path: __dirname + '/../../.env'})
 export const createSite = async function () {  
     if(!verifyNetlifyConfig()){
         console.log("You need to set your Netlify Token and Netlify username first");
-         setConfiguration(["netlifyToken","netlifyUser"]);
-        process.exit(0);
+        await setConfigurationAsync(["netlifyToken","netlifyUser"]);
+        //process.exit(0);
     }
     
     const {githubInstallationId, netlifyUser} = process.env;
@@ -60,7 +60,6 @@ export const createSite = async function () {
         payload["build_settings"] = payload['repo']
             
     }
-    console.log(payload)
     netlifyRequest(`/api/v1/${netlifyUser}/sites`,payload).then((res)=>{
         console.log("Site created")
         

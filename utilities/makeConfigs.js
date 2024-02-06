@@ -190,7 +190,34 @@ export const setConfiguration = (configs = null)=>{
     
 }
 
-
+export const setConfigurationAsync = async (configs = null)=>{
+    const configChoices = configs || singleConfigurations;
+    if(!configChoices.includes("exit")){
+        configChoices.push("exit");
+    }
+    exsistOrCreateEnvFile();
+    const opts = readFileSync(envFile, "utf8").split("\n");
+    await inquirer.prompt([{
+        type:"list",
+        name:"option",
+        message:"Choose a configuration to change",
+        choices:configChoices
+    },{
+        type:"input",
+        name:"value",
+        message: (answers)=>`Enter the new value (current ${opts.find(opt=>opt.startsWith(answers.option))?.split("=")[1] || ""})`,
+        when: (answers)=>answers.option !== "exit"
+    }]).then(async answers=>{
+        if(answers.option === "exit"){
+            return
+        }else{
+            setEnvOption(answers.option,answers.value);
+            await setConfigurationAsync(configs);
+        }
+        
+    })
+    
+}
 
 const exsistOrCreateEnvFile = ()=>{
     if(!existsSync(envFile)){
