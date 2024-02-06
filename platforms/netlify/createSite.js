@@ -8,14 +8,14 @@ import { getNetlifyDeployKey, netlifyRequest, verifyNetlifyConfig } from "./util
 
 import * as path from "node:path";
 import { fileURLToPath } from 'url';
-import { setConfiguration } from "../../utilities/makeConfigs.js";
+import { setConfiguration  } from "../../utilities/makeConfigs.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 configDotenv({path: __dirname + '/../../.env'})
 export const createSite = async function () {  
     if(!verifyNetlifyConfig()){
         console.log("You need to set your Netlify Token and Netlify username first");
-        //await setConfiguration(["netlifyToken","netlifyUser"]);
+         setConfiguration(["netlifyToken","netlifyUser"]);
         process.exit(0);
     }
     

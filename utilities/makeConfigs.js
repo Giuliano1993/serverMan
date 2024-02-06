@@ -131,7 +131,8 @@ export const setupConfiguration = async ()=>{
 const setEnvOption = (opt, value)=>{
     exsistOrCreateEnvFile();
     const data = readFileSync(envFile, "utf8");
-    const condfigExsist = data.includes(opt);
+    const rows = data.split("\n");
+    const condfigExsist = rows.find(row=>row.startsWith(opt));
     if(condfigExsist){
         const lines = [];
         data.split("\n").forEach((line)=>{
@@ -142,6 +143,7 @@ const setEnvOption = (opt, value)=>{
         })
         writeFileSync(envFile,lines.join("\n"),(err)=>{if(err)console.error(err)})
     }else{
+
         writeFileSync(envFile,data + `\n${opt}=${value}`,(err)=>{if(err)console.error(err)})
     }
 
@@ -174,7 +176,7 @@ export const setConfiguration = (configs = null)=>{
     },{
         type:"input",
         name:"value",
-        message: (answers)=>`Enter the new value (current ${opts.find(opt=>opt.startsWith(answers.option)).split("=")[1] || ""})`,
+        message: (answers)=>`Enter the new value (current ${opts.find(opt=>opt.startsWith(answers.option))?.split("=")[1] || ""})`,
         when: (answers)=>answers.option !== "exit"
     }]).then(answers=>{
         if(answers.option === "exit"){
@@ -187,6 +189,7 @@ export const setConfiguration = (configs = null)=>{
     })
     
 }
+
 
 
 const exsistOrCreateEnvFile = ()=>{
