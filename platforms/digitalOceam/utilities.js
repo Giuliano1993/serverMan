@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 configDotenv({path: __dirname + '/../../.env'})
 const API_BASE_URL = "https://api.digitalocean.com/v2/"
 
-
+export const verifyDoConfig = ()=> process.env.doAuthToken || null
 export const getConfig = (configName)=>{
     return process.env[configName];
 }

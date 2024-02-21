@@ -1,10 +1,14 @@
 import { type } from "os";
-import { getSizes, getDistributions, createDroplet, getDroplet } from "./utilities.js";
+import { getSizes, getDistributions, createDroplet, getDroplet, verifyDoConfig } from "./utilities.js";
 import inquirer from "inquirer";
 import { NodeSSH } from "node-ssh";
+import { setConfigurationAsync } from "../../utilities/makeConfigs.js";
 
 const setupServer = async ()=>{
-    
+    if(!verifyDoConfig()){
+        console.log("You have to set your Digital Ocean Token first")
+        await setConfigurationAsync(["doAuthToken"]);
+    }
     const sizes = await getSizes()
 
     const sizeChoices = sizes.map((s)=>`RAM: ${s['memory']}, CPUs: ${s['vcpus']}, disk: ${s['disk']}GB `)
