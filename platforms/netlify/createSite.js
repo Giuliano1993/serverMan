@@ -36,19 +36,35 @@ export const createSite = async function () {
     }]).then(answers=>answers.useRepo);
 
     if(useRepo){
-        const repo = await chooseRepo();   
-        const pk = await getNetlifyDeployKey();
-        let gitDeployKey = await getDeployKey(repo['name']);
-        if(!gitDeployKey || getDeployKey.length === 0){
-            console.log("No deploy key found for this repo. Creating one now.");
-            gitDeployKey = await createDeployKey(repo['name'])
-        }else{
-            gitDeployKey = gitDeployKey[0]
-        }
+        try{
 
+            const repo = await chooseRepo();   
+            const pk = await getNetlifyDeployKey();
+            let gitDeployKey = await getDeployKey(repo['name']);
+            if(!gitDeployKey || getDeployKey.length === 0){
+                console.log("No deploy key found for this repo. Creating one now.");
+                gitDeployKey = await createDeployKey(repo['name'])
+            }else{
+                gitDeployKey = gitDeployKey[0]
+            }
+        }catch(err){
+            if(err.status && err.status === 401){
+                console.log("Wrong credentials for Netlify or Github. Please update them in your configuration");
+                await setConfigurationAsync(["netlifyToken","netlifyUser","gitToken","gitUser","githubInstallationId"]);
+            }
+
+        }
+        const cmd = await inquirer.prompt([
+            {
+                type: "input",
+                name: "cmd",
+                message: "What command should be run to build the site?",
+                default: "npm run build"                
+            }
+        ])
         payload['repo'] = {
             "branch": repo['default_branch'],
-            "cmd": "npm run build",
+            "cmd": cmd,
             "deploy_key_id": gitDeployKey['id'],
             "dir": "dist/",
             "private": false,
@@ -60,11 +76,16 @@ export const createSite = async function () {
         payload["build_settings"] = payload['repo']
             
     }
-    netlifyRequest(`/api/v1/${netlifyUser}/sites`,payload).then((res)=>{
-        console.log("Site created")
-        
-    }).catch((err)=>{
+    try {
+        netlifyRequest(`/api/v1/${netlifyUser}/sites`,payload).then((res)=>{
+            console.log("Site created")
+            
+        }).catch((err)=>{
+            console.log("Error creating site");
+            console.log(err);
+        })
+    } catch (error) {
         console.log("Error creating site");
-        console.log(err);
-    })
+        console.log(error);
+    }
 };
